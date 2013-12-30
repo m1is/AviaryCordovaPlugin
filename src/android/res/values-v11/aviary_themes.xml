@@ -1,0 +1,15 @@
+<resources>
+    <style name="AviaryBaseTheme" parent="android:Theme.Holo.NoActionBar">
+        <item name="aviaryProgressBarSmall">@android:style/Widget.Holo.ProgressBar.Small</item>
+        <item name="aviaryProgressBarLarge">@android:style/Widget.Holo.ProgressBar.Large</item>
+        <item name="aviaryProgressBarMedium">@android:style/Widget.Holo.ProgressBar</item>
+        <item name="aviaryProgressBarActionBar">?aviaryProgressBarMedium</item>
+        
+        <item name="aviaryProgressBarSmallInverse">@android:style/Widget.Holo.ProgressBar.Small</item>
+        <item name="aviaryProgressBarLargeInverse">@android:style/Widget.Holo.ProgressBar.Large</item>
+        <item name="aviaryProgressBarMediumInverse">@android:style/Widget.Holo.ProgressBar</item>        
+    </style>
+    
+    <style name="AviaryBaseTheme.Dialog" parent="android:Theme.Holo.Dialog"></style>
+    
+</resources>

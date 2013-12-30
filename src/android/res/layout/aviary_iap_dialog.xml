@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/aviary_main_iap_dialog"
+    style="?attr/aviaryIAPDialogMainLayout"
+    android:layout_width="0dip"
+    android:layout_height="match_parent"
+    android:layout_weight="?attr/aviaryIAPDialogWidthWeight"
+    android:clickable="true"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical"
+    android:weightSum="100" >
+
+    <requestFocus />
+
+    <RelativeLayout
+        android:layout_width="1dip"
+        android:layout_height="0dip"
+        android:layout_weight="?attr/aviaryIAPDialogMarginTopWeight" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="?attr/aviaryIAPDialogHeightWeight"
+        android:baselineAligned="false"
+        android:orientation="vertical" >
+
+        <!-- TOP MARGIN -->
+
+        <RelativeLayout
+            style="?attr/aviaryIAPDialogGridTopStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <!-- HEAD -->
+
+        <LinearLayout
+            android:id="@+id/aviary_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            android:clickable="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dip" >
+
+            <ImageView
+                android:id="@+id/aviary_icon"
+                style="?attr/aviaryIAPDialogIcon" />
+
+            <LinearLayout
+                android:layout_width="0dip"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:layout_weight="1"
+                android:orientation="vertical" >
+
+                <com.aviary.android.feather.widget.AviaryTextView
+                    android:id="@+id/aviary_title"
+                    style="?attr/aviaryIAPDialogTitleStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <requestFocus />
+                </com.aviary.android.feather.widget.AviaryTextView>
+
+                <com.aviary.android.feather.widget.AviaryTextView
+                    android:id="@+id/aviary_description"
+                    style="?attr/aviaryIAPDialogTextStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <com.aviary.android.feather.widget.AviaryButton
+                android:id="@+id/aviary_button"
+                style="?attr/aviaryIAPDialogDownloadButtonStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/feather_download" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/aviary_workspace_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dip"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dip"
+                android:layout_weight="1"
+                android:background="@android:color/white" >
+
+                <com.aviary.android.feather.widget.AviaryWorkspace
+                    android:id="@+id/aviary_workspace"
+                    style="?attr/aviaryIAPDialogWorkspaceStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true" />
+
+                <RelativeLayout
+                    style="?attr/aviaryIAPDialogShadowTop"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <RelativeLayout
+                    style="?attr/aviaryIAPDialogShadowBottom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true" />
+
+                <include
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    layout="@layout/aviary_iap_download_error_message"
+                    android:visibility="gone" />
+
+                <include
+                    android:id="@+id/aviary_progress"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    layout="@layout/aviary_progress_medium_inverse"
+                    android:visibility="gone" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0"
+                android:background="?attr/aviaryIAPDialogGridBackground" >
+
+                <com.aviary.android.feather.widget.AviaryWorkspaceIndicator
+                    android:id="@+id/aviary_workspace_indicator"
+                    style="?attr/aviaryIAPDialogWorkspaceIndicatorStyle"
+                    android:layout_width="match_parent"
+                    android:layout_centerInParent="true"
+                    android:gravity="center" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

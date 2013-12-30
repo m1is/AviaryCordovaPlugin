@@ -1,0 +1,493 @@
+<plugin id="com.m1is.aviary"
+        version="1.0.0"
+        xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <name>Aviary</name>
+    <description>Aviary Photo Editor</description>
+
+    <js-module name="Aviary" src="www/Aviary.js">
+        <clobbers target="cordova.plugins.Aviary"/>
+    </js-module>
+
+    <platform name="android">
+        <source-file src="src/android/com/m1is/aviary/Aviary.java" target-dir="src/com/m1is/aviary" />
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Aviary">
+                <param name="android-package" value="com.m1is.aviary.Aviary" />
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.INTERNET" />
+            <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+            <uses-permission android:name="android.permission.VIBRATE" />
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity
+                android:name="com.aviary.android.feather.FeatherActivity"
+                android:configChanges="orientation|keyboardHidden|screenSize"
+                android:screenOrientation="unspecified"
+                android:hardwareAccelerated="true"
+                android:largeHeap="true"
+                android:theme="@style/AviaryTheme" />
+
+            <receiver
+                android:name="com.aviary.android.feather.library.receivers.AviarySystemReceiver"
+                android:exported="true"
+                android:process=":aviary_standalone_system_receiver" >
+                <intent-filter>
+                    <action android:name="android.intent.action.PACKAGE_ADDED" />
+                    <action android:name="android.intent.action.PACKAGE_REMOVED" />
+                    <action android:name="android.intent.action.PACKAGE_REPLACED" />
+                    <data android:scheme="package" />
+                </intent-filter>
+            </receiver>
+
+            <preference name="API_KEY" />
+            <meta-data
+                android:name="com.aviary.android.feather.v1.API_KEY"
+                android:value="$API_KEY" />
+        </config-file>
+
+        <source-file src="src/android/libs/abtest.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/android-support-v4.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/aviary-headless-library.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/aviary-library.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/aviary-tracking.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/horizontalvariablelistview.jar" target-dir="libs"/>
+        <source-file src="src/android/libs/imageviewtouch.jar" target-dir="libs"/>
+
+        <source-file src="src/android/libs/armeabi/libaviary_exif.so" target-dir="libs/armeabi" />
+        <source-file src="src/android/libs/armeabi/libaviary_moalite.so" target-dir="libs/armeabi" />
+        <source-file src="src/android/libs/armeabi/libaviary_native.so" target-dir="libs/armeabi" />
+        <source-file src="src/android/libs/armeabi-v7a/libaviary_exif.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="src/android/libs/armeabi-v7a/libaviary_moalite.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="src/android/libs/armeabi-v7a/libaviary_native.so" target-dir="libs/armeabi-v7a" />
+        <source-file src="src/android/libs/x86/libaviary_exif.so" target-dir="libs/x86" />
+        <source-file src="src/android/libs/x86/libaviary_moalite.so" target-dir="libs/x86" />
+        <source-file src="src/android/libs/x86/libaviary_native.so" target-dir="libs/x86" />
+
+        <source-file src="src/android/com/aviary/android/feather/R.java" target-dir="src/com/aviary/android/feather/"/>
+        <source-file src="src/android/com/aviary/android/feather/AviaryMainController.java" target-dir="src/com/aviary/android/feather/"/>
+        <source-file src="src/android/com/aviary/android/feather/FeatherActivity.java" target-dir="src/com/aviary/android/feather/"/>
+        <source-file src="src/android/com/aviary/android/feather/async_tasks/AsyncImageManager.java" target-dir="src/com/aviary/android/feather/async_tasks" />
+        <source-file src="src/android/com/aviary/android/feather/async_tasks/DownloadImageAsyncTask.java" target-dir="src/com/aviary/android/feather/async_tasks" />
+        <source-file src="src/android/com/aviary/android/feather/async_tasks/ExifTask.java" target-dir="src/com/aviary/android/feather/async_tasks" />
+        <source-file src="src/android/com/aviary/android/feather/database/DataSetObservableExtended.java" target-dir="src/com/aviary/android/feather/database" />
+        <source-file src="src/android/com/aviary/android/feather/database/DataSetObserverExtended.java" target-dir="src/com/aviary/android/feather/database" />
+        <source-file src="src/android/com/aviary/android/feather/effects/AbstractContentPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/AbstractOptionPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/AbstractPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/AbstractPanelLoaderService.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/AdjustEffectPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/BordersPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/ColorSplashPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/CropPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/DelayedSpotDrawPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/DrawingPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/EffectsPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/EnhanceEffectPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/MemePanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/NativeEffectRangePanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/SimpleStatusMachine.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/SliderEffectPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/StickersPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/TextPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/effects/TiltShiftPanel.java" target-dir="src/com/aviary/android/feather/effects" />
+        <source-file src="src/android/com/aviary/android/feather/graphics/GalleryBottomIndicatorDrawable.java" target-dir="src/com/aviary/android/feather/graphics" />
+        <source-file src="src/android/com/aviary/android/feather/graphics/GalleryTopIndicatorDrawable.java" target-dir="src/com/aviary/android/feather/graphics" />
+        <source-file src="src/android/com/aviary/android/feather/graphics/GlowBitmapDrawable.java" target-dir="src/com/aviary/android/feather/graphics" />
+        <source-file src="src/android/com/aviary/android/feather/graphics/GlowDrawable.java" target-dir="src/com/aviary/android/feather/graphics" />
+        <source-file src="src/android/com/aviary/android/feather/graphics/PluginDividerDrawable.java" target-dir="src/com/aviary/android/feather/graphics" />
+        <source-file src="src/android/com/aviary/android/feather/graphics/PreviewFillColorDrawable.java" target-dir="src/com/aviary/android/feather/graphics" />
+        <source-file src="src/android/com/aviary/android/feather/graphics/PreviewSpotDrawable.java" target-dir="src/com/aviary/android/feather/graphics" />
+        <source-file src="src/android/com/aviary/android/feather/graphics/RepeatableHorizontalDrawable.java" target-dir="src/com/aviary/android/feather/graphics" />
+        <source-file src="src/android/com/aviary/android/feather/opengl/AviaryGLSurfaceView.java" target-dir="src/com/aviary/android/feather/opengl" />
+        <source-file src="src/android/com/aviary/android/feather/utils/SimpleBitmapCache.java" target-dir="src/com/aviary/android/feather/utils" />
+        <source-file src="src/android/com/aviary/android/feather/utils/ThreadUtils.java" target-dir="src/com/aviary/android/feather/utils" />
+        <source-file src="src/android/com/aviary/android/feather/utils/TypefaceUtils.java" target-dir="src/com/aviary/android/feather/utils" />
+        <source-file src="src/android/com/aviary/android/feather/utils/UIUtils.java" target-dir="src/com/aviary/android/feather/utils" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AdjustImageView.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryAbsSpinner.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryAdapterView.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryBottomBarViewFlipper.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryButton.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryEdgeEffect.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryGallery.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryGalleryTopIndicatorView.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryHighlightImageButton.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryImageSwitcher.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryNavBarViewFlipper.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviarySeekBar.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryTextView.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryToast.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryToggleButton.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryWheel.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryWorkspace.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/AviaryWorkspaceIndicator.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/CellLayout.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/CropImageView.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/DrawableHighlightView.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/EffectThumbLayout.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/HighlightView.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/IAPDialog.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/ImageViewDrawableOverlay.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/ImageViewSpotDraw.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/ImageViewTiltiShiftTouch.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/ImageViewTouchAndDraw.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/PointCloud.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/ScrollerRunnable.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/VibrationHelper.java" target-dir="src/com/aviary/android/feather/widget" />
+        <source-file src="src/android/com/aviary/android/feather/widget/VibrationWidget.java" target-dir="src/com/aviary/android/feather/widget" />
+
+        <source-file src="src/android/res/anim/aviary_bottobar_in_animation.xml" target-dir="res/anim" />
+        <source-file src="src/android/res/anim/aviary_bottobar_out_animation.xml" target-dir="res/anim" />
+        <source-file src="src/android/res/anim/aviary_iap_close_animation.xml" target-dir="res/anim" />
+        <source-file src="src/android/res/anim/aviary_iap_layout_animation.xml" target-dir="res/anim" />
+        <source-file src="src/android/res/anim/aviary_push_up_in.xml" target-dir="res/anim" />
+        <source-file src="src/android/res/anim/aviary_push_up_out.xml" target-dir="res/anim" />
+        <source-file src="src/android/res/anim/aviary_slide_in_top.xml" target-dir="res/anim" />
+        <source-file src="src/android/res/anim/aviary_toast_exit.xml" target-dir="res/anim" />
+        <source-file src="src/android/res/color/aviary_tool_text_color.xml" target-dir="res/color" />
+        <source-file src="src/android/res/color/aviary_tool_text_color_inverted.xml" target-dir="res/color" />
+        <source-file src="src/android/res/color/aviary_tool_text_color_no_selected.xml" target-dir="res/color" />
+        <source-file src="src/android/res/drawable/aviary_blue_button_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_bottombar_hline.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_bottombar_logo_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_bottombar_thumb_divider_left.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_bottombar_thumb_divider_right.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_bottombar_thumb_external_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_bottombar_tools_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_bottombar_vline.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_bottombar_vline_inverted.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_bottombar_vline_selector.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_crop_invert_indicator_selector.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_gallery_default_background_selector.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_gallery_middle_divider.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_gray_button_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_hidden_edittext_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_home_dialog_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_iap_workspace_indicator_normal.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_iap_workspace_indicator_selected.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_iap_workspace_indicator_selector.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_main_loader_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_nav_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_nav_button_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_nav_button_pressed.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_nav_divider.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_seekbar_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_seekbar_secondary_center_selector.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_seekbar_secondary_inverted_selector.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_seekbar_secondary_selector.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_seekbar_thumb.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_shadown_top.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_shadow_bottom.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_sticker_highlight_background_selector.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_text_highlight_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_tools_divider.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_tool_button_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_tool_center_button_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_tool_left_button_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_tool_right_button_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable/aviary_wheel_background.xml" target-dir="res/drawable" />
+        <source-file src="src/android/res/drawable-hdpi/aviary_hidden_textfield_normal.9.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/res/drawable-hdpi/aviary_update_arrow.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/res/drawable-hdpi/ic_stickers.png" target-dir="res/drawable-hdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_adjust_knob.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_blue_button_background_normal.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_blue_button_background_pressed.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_crop_invert_indicator.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_crop_invert_indicator_inverted.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_crop_invert_indicator_transparent.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_delete_knob.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_effects_pack_background.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_effect_item_getmore.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_external_packs_download_icon.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_frames_pack_background.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_frame_divider_background.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_frame_item_getmore.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_frame_item_selected_image.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_gray_button_background_normal.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_gray_button_background_pressed.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_circle.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_enhance_brighten.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_enhance_colorfix.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_enhance_hd.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_eraser.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_eraser_small.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_flip_horizontal.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_flip_vertical.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_free.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_na.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_rectangle.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_rotate_left.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_rotate_right.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_ic_smart.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_knob.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_lens_image.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_logo_big.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_meme_button_background.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_meme_clear_button.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_nav_check.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_overscroll_edge.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_overscroll_glow.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_powered.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_resize_knob.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_seekbar_thumb_focused.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_seekbar_thumb_normal.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_seekbar_thumb_pressed.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_seekbar_thumb_zero_normal.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_seekbar_thumb_zero_pressed.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_sticker_item_getmore.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_sticker_pack_background.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_symbol_minus_normal.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_symbol_plus_normal.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_toast_background.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_button_center_normal.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_button_center_pressed.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_button_left_normal.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_button_left_pressed.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_button_normal.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_button_pressed.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_button_right_normal.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_button_right_pressed.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_blemish.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_brightness.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_colorsplash.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_contrast.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_crop.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_draw.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_effects.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_enhance.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_feedback.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_focus.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_frames.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_meme.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_orientation.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_redeye.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_saturation.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_sharpen.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_stickers.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_text.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_warmth.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_tool_ic_whiten.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_update_arrow.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_wave_dot.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_wheel_container.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_wheel_indicator.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_wheel_line.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_wheel_shadow.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/aviary_wheel_shadow_bottom.9.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-mdpi/ic_stickers.png" target-dir="res/drawable-mdpi" />
+        <source-file src="src/android/res/drawable-v10/aviary_text_highlight_bg_normal.xml" target-dir="res/drawable-v10" />
+        <source-file src="src/android/res/drawable-v10/aviary_text_highlight_bg_pressed.xml" target-dir="res/drawable-v10" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_adjust_knob.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_blue_button_background_normal.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_blue_button_background_pressed.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_crop_invert_indicator.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_crop_invert_indicator_inverted.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_crop_invert_indicator_transparent.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_delete_knob.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_effects_pack_background.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_effect_item_getmore.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_external_packs_download_icon.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_frames_pack_background.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_frame_divider_background.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_frame_item_getmore.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_frame_item_selected_image.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_gray_button_background_normal.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_gray_button_background_pressed.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_iap_grid_background.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_iap_grid_background_inverted.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_circle.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_enhance_brighten.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_enhance_colorfix.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_enhance_hd.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_eraser.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_eraser_small.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_flip_horizontal.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_flip_vertical.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_free.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_na.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_rectangle.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_rotate_left.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_rotate_right.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_ic_smart.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_knob.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_lens_image.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_logo_big.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_meme_button_background.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_meme_clear_button.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_nav_check.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_overscroll_edge.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_overscroll_glow.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_powered.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_resize_knob.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_background_image.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_secondary_inverted_normal.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_secondary_inverted_pressed.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_secondary_normal.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_secondary_pressed.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_thumb_focused.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_thumb_normal.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_thumb_pressed.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_thumb_zero_normal.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_seekbar_thumb_zero_pressed.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_sticker_item_getmore.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_sticker_pack_background.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_symbol_minus_normal.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_symbol_plus_normal.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_text_highlight_bg_normal.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_text_highlight_bg_pressed.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_toast_background.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_button_center_normal.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_button_center_pressed.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_button_left_normal.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_button_left_pressed.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_button_normal.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_button_pressed.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_button_right_normal.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_button_right_pressed.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_blemish.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_brightness.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_colorsplash.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_contrast.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_crop.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_draw.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_effects.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_enhance.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_feedback.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_focus.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_frames.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_meme.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_orientation.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_redeye.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_saturation.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_sharpen.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_stickers.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_text.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_warmth.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_tool_ic_whiten.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_update_arrow.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_wave_dot.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_wheel_container.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_wheel_indicator.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_wheel_line.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_wheel_shadow.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/aviary_wheel_shadow_bottom.9.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/drawable-xhdpi/ic_stickers.png" target-dir="res/drawable-xhdpi" />
+        <source-file src="src/android/res/layout/aviary_bottombar.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_adjust.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_crop.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_draw.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_effects.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_effects_gl.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_focus.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_meme.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_spot_draw.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_stickers.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_content_text.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_effect_item_more.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_feedback_dialog_view.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_frame_item.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_frame_item_divider.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_frame_item_external.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_frame_item_more.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_gallery_crop_item_view.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_gallery_crop_item_view_custom.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_gallery_item_divider.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_gallery_item_highlight_view.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_gallery_item_view.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_iap_cell_item_effects.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_iap_cell_item_stickers.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_iap_dialog.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_iap_dialog_container.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_iap_download_error_message.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_iap_workspace_screen_effects.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_iap_workspace_screen_stickers.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_main_loader.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_main_view.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_modal_progress_view.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_navbar.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_navbar_text.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_adjust.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_colorsplash.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_crop.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_draw.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_enhance.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_focus.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_frames.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_meme.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_seekbar.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_spot.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_stickers.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_panel_wheel.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_progress_medium.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_progress_medium_inverse.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_progress_small.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_sticker_item.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_sticker_item_more.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_sticker_item_single.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_thumb_divider_left.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_thumb_divider_right.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_toast_layout.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_tool_feedback_layout.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/layout/aviary_tool_layout.xml" target-dir="res/layout" />
+        <source-file src="src/android/res/raw/aviary_default_effects.zip" target-dir="res/raw" />
+        <source-file src="src/android/res/values/aviary_attrs.xml" target-dir="res/values" />
+        <source-file src="src/android/res/values/aviary_colors.xml" target-dir="res/values" />
+        <source-file src="src/android/res/values/aviary_config.xml" target-dir="res/values" />
+        <source-file src="src/android/res/values/aviary_dimens.xml" target-dir="res/values" />
+        <source-file src="src/android/res/values/aviary_plugin.xml" target-dir="res/values" />
+        <source-file src="src/android/res/values/aviary_styles.xml" target-dir="res/values" />
+        <source-file src="src/android/res/values/aviary_themes.xml" target-dir="res/values" />
+        <source-file src="src/android/res/values/aviary_strings.xml" target-dir="res/values" />
+        <source-file src="src/android/res/values-bg/strings.xml" target-dir="res/values-bg" />
+        <source-file src="src/android/res/values-ca/strings.xml" target-dir="res/values-ca" />
+        <source-file src="src/android/res/values-cs/strings.xml" target-dir="res/values-cs" />
+        <source-file src="src/android/res/values-da/strings.xml" target-dir="res/values-da" />
+        <source-file src="src/android/res/values-de/strings.xml" target-dir="res/values-de" />
+        <source-file src="src/android/res/values-es/strings.xml" target-dir="res/values-es" />
+        <source-file src="src/android/res/values-fi/strings.xml" target-dir="res/values-fi" />
+        <source-file src="src/android/res/values-fr/strings.xml" target-dir="res/values-fr" />
+        <source-file src="src/android/res/values-hdpi/aviary_dimens.xml" target-dir="res/values-hdpi" />
+        <source-file src="src/android/res/values-hu/strings.xml" target-dir="res/values-hu" />
+        <source-file src="src/android/res/values-id/strings.xml" target-dir="res/values-id" />
+        <source-file src="src/android/res/values-it/strings.xml" target-dir="res/values-it" />
+        <source-file src="src/android/res/values-iw/strings.xml" target-dir="res/values-iw" />
+        <source-file src="src/android/res/values-ja/strings.xml" target-dir="res/values-ja" />
+        <source-file src="src/android/res/values-ko/strings.xml" target-dir="res/values-ko" />
+        <source-file src="src/android/res/values-land/aviary_config.xml" target-dir="res/values-land" />
+        <source-file src="src/android/res/values-large/aviary_dimens.xml" target-dir="res/values-large" />
+        <source-file src="src/android/res/values-large/aviary_styles.xml" target-dir="res/values-large" />
+        <source-file src="src/android/res/values-large-land/aviary_config.xml" target-dir="res/values-large-land" />
+        <source-file src="src/android/res/values-large-land/aviary_styles.xml" target-dir="res/values-large-land" />
+        <source-file src="src/android/res/values-large-port/aviary_config.xml" target-dir="res/values-large-port" />
+        <source-file src="src/android/res/values-lt/strings.xml" target-dir="res/values-lt" />
+        <source-file src="src/android/res/values-lv/strings.xml" target-dir="res/values-lv" />
+        <source-file src="src/android/res/values-mdpi/aviary_dimens.xml" target-dir="res/values-mdpi" />
+        <source-file src="src/android/res/values-nl/strings.xml" target-dir="res/values-nl" />
+        <source-file src="src/android/res/values-no/strings.xml" target-dir="res/values-no" />
+        <source-file src="src/android/res/values-pl/strings.xml" target-dir="res/values-pl" />
+        <source-file src="src/android/res/values-pt/strings.xml" target-dir="res/values-pt" />
+        <source-file src="src/android/res/values-pt-rBR/strings.xml" target-dir="res/values-pt-rBR" />
+        <source-file src="src/android/res/values-ru/strings.xml" target-dir="res/values-ru" />
+        <source-file src="src/android/res/values-sk/strings.xml" target-dir="res/values-sk" />
+        <source-file src="src/android/res/values-sv/strings.xml" target-dir="res/values-sv" />
+        <source-file src="src/android/res/values-tr/strings.xml" target-dir="res/values-tr" />
+        <source-file src="src/android/res/values-v10/aviary_config.xml" target-dir="res/values-v10" />
+        <source-file src="src/android/res/values-v11/aviary_themes.xml" target-dir="res/values-v11" />
+        <source-file src="src/android/res/values-v14/aviary_config.xml" target-dir="res/values-v14" />
+        <source-file src="src/android/res/values-v14/aviary_themes.xml" target-dir="res/values-v14" />
+        <source-file src="src/android/res/values-vi/strings.xml" target-dir="res/values-vi" />
+        <source-file src="src/android/res/values-xlarge/aviary_styles.xml" target-dir="res/values-xlarge" />
+        <source-file src="src/android/res/values-xlarge-land/aviary_config.xml" target-dir="res/values-xlarge-land" />
+        <source-file src="src/android/res/values-xlarge-port/aviary_config.xml" target-dir="res/values-xlarge-port" />
+        <source-file src="src/android/res/values-yr/strings.xml" target-dir="res/values-yr" />
+        <source-file src="src/android/res/values-zh-rCN/strings.xml" target-dir="res/values-zh-rCN" />
+        <source-file src="src/android/res/values-zh-rTW/strings.xml" target-dir="res/values-zh-rTW" />
+    </platform>
+</plugin>
