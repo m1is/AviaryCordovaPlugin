@@ -46,10 +46,16 @@
                 </intent-filter>
             </receiver>
 
+            <!-- for Icenium since I don't know how to set variables for it yet -->
+            <meta-data
+                android:name="com.aviary.android.feather.v1.API_KEY"
+                android:value="dbc1109b282e01c0" />
+            <!--
             <preference name="API_KEY" />
             <meta-data
                 android:name="com.aviary.android.feather.v1.API_KEY"
                 android:value="$API_KEY" />
+            -->
         </config-file>
 
         <source-file src="src/android/libs/abtest.jar" target-dir="libs"/>
@@ -489,5 +495,16 @@
         <source-file src="src/android/res/values-yr/strings.xml" target-dir="res/values-yr" />
         <source-file src="src/android/res/values-zh-rCN/strings.xml" target-dir="res/values-zh-rCN" />
         <source-file src="src/android/res/values-zh-rTW/strings.xml" target-dir="res/values-zh-rTW" />
+    </platform>
+
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="Aviary">
+                <param name="ios-package" value="Aviary" />
+            </feature>
+        </config-file>
+
+        <source-file src="src/ios/Aviary.m" />
+        <header-file src="src/ios/Aviary.h" />
     </platform>
 </plugin>
