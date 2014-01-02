@@ -11,7 +11,13 @@ plugman install -platform android -project %PROJECT_PATH% -plugin https://github
 
 iOS Instructions
 ===================
-Still working on the iOS version.
+Create a new Cordova project in Xcode then follow the Aviary setup guide to configure the project for the SDK.
+
+http://developers.aviary.com/docs/ios/setup-guide
+
+Then run the following command:
+
+plugman install -platform ios -project %PROJECT_PATH% -plugin https://github.com/m1is/AviaryCordovaPlugin
 
 How to use the plugin
 ===================
@@ -45,6 +51,10 @@ From a successful callback from the camera:
             
 For more information on the above options see the Aviary documentation.
 http://developers.aviary.com/docs
+
+Known Issues
+===================
+- With iOS projects if the plugin is uninstalled and reinstalled it seems to break the plugin with the following error: Plugin 'Aviary' not found, or is not a CDVPlugin.
 
 Thanks
 ===================
