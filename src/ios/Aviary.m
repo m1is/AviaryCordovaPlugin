@@ -1,4 +1,3 @@
-
 #import "Aviary.h"
 #import <Cordova/CDVPlugin.h>
 #import "AFPhotoEditorController.h"
@@ -11,6 +10,8 @@
 - (void) show:(CDVInvokedUrlCommand*) command
 {
     pluginCallbackId = command.callbackId;
+    
+    NSString* arg0 = [command.arguments objectAtIndex:0];
     
     NSURL* url = [NSURL URLWithString:arg0];
     NSString* imagePath = [url path];
