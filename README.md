@@ -19,6 +19,12 @@ Then run the following command:
 
 plugman install -platform ios -project %PROJECT_PATH% -plugin https://github.com/m1is/AviaryCordovaPlugin
 
+
+Cordova (3.0+) Install Note:
+=============
+cordova plugin add https://github.com/m1is/AviaryCordovaPlugin
+
+
 How to use the plugin
 ===================
 From a successful callback from the camera:
