@@ -15,6 +15,7 @@
 
 @property (nonatomic, retain) AFPhotoEditorController *aviary;
 @property (nonatomic, retain) NSString* pluginCallbackId;
+@property (nonatomic, retain) NSNumber* quality;
 
 - (void) show:(CDVInvokedUrlCommand*)command;
 
