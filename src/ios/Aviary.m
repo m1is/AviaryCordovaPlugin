@@ -6,6 +6,7 @@
 
 @synthesize aviary;
 @synthesize pluginCallbackId;
+@synthesize quality;
 
 - (void) show:(CDVInvokedUrlCommand*) command
 {
@@ -17,6 +18,8 @@
     NSString* imagePath = [url path];
     UIImage* image = [UIImage imageWithContentsOfFile:imagePath];
     
+    quality = [command.arguments objectAtIndex:2];
+
     // tool list
     if (![[command.arguments objectAtIndex:3] isEqual:[NSNull null]])
     {
@@ -103,11 +106,10 @@
 {
     BOOL ok = false;
     NSString * res = @"error";
-    float quality = 80.0f;
     BOOL saveToPhotoAlbum = YES;
     
     NSData* data = nil;
-    data = UIImageJPEGRepresentation(image , quality);
+    data = UIImageJPEGRepresentation(image , (quality ? ([quality floatValue] / 100) : 0.9f));
     
     // write to temp directory and reutrn URI
     // get the temp directory path
