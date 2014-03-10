@@ -17,6 +17,7 @@
 @property (nonatomic, retain) NSString* pluginCallbackId;
 @property (nonatomic, retain) NSNumber* quality;
 
+- (void) prepareForShow:(CDVInvokedUrlCommand*)command;
 - (void) show:(CDVInvokedUrlCommand*)command;
 
 @end

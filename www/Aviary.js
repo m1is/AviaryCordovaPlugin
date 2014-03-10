@@ -34,6 +34,11 @@ var Aviary = function () {
 };
 
 Aviary.prototype = {
+    prepareForShow: function(options) {
+        options = options || {}
+        cordova.exec(options.success, options.error, "Aviary", "prepareForShow", []);
+    },
+
     show: function (options) {
         var _show = function () {
             cordova.exec(options.success, options.error, "Aviary", "show", [

@@ -8,6 +8,13 @@
 @synthesize pluginCallbackId;
 @synthesize quality;
 
+- (void) prepareForShow:(CDVInvokedUrlCommand*) command
+{
+    [AFOpenGLManager beginOpenGLLoad];
+    CDVPluginResult* result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+    [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
 - (void) show:(CDVInvokedUrlCommand*) command
 {
     pluginCallbackId = command.callbackId;

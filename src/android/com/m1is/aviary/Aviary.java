@@ -120,6 +120,9 @@ public class Aviary extends CordovaPlugin {
 				Log.e(LOG_TAG, ex.toString());
 				callbackContext.error("Unknown error occured showing aviary.");
 			}
+		} else if (action.equals("prepareForShow")) {
+			// nothing to do on Android
+			callbackContext.success();
 		}
 
 		return false;

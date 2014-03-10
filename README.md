@@ -53,10 +53,19 @@ From a successful callback from the camera:
                     alert(message);
                 }
             });
-          
-            
+
 For more information on the above options see the Aviary documentation.
 http://developers.aviary.com/docs
+          
+To allow the plugin the execute any optimizations in preparation for showing the editor:
+
+            cordova.plugins.Aviary.prepareForShow({
+                success: function (result) {
+                    alert("Aviary is prepared to show.");
+                }
+            });
+
+This step is optional and currently only implemented by the iOS plugin.
 
 Known Issues
 ===================
