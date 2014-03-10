@@ -7,19 +7,20 @@
 @synthesize aviary;
 @synthesize pluginCallbackId;
 @synthesize quality;
+@synthesize originalImageURI;
 
 - (void) show:(CDVInvokedUrlCommand*) command
 {
     pluginCallbackId = command.callbackId;
     
-    NSString* arg0 = [command.arguments objectAtIndex:0];
+    originalImageURI = [command.arguments objectAtIndex:0];
     
-    NSURL* url = [NSURL URLWithString:arg0];
+    NSURL* url = [NSURL URLWithString:originalImageURI];
     NSString* imagePath = [url path];
     UIImage* image = [UIImage imageWithContentsOfFile:imagePath];
-    
-    quality = [command.arguments objectAtIndex:2];
 
+    quality = [command.arguments objectAtIndex:2];
+    
     // tool list
     if (![[command.arguments objectAtIndex:3] isEqual:[NSNull null]])
     {
@@ -104,6 +105,12 @@
 
 -(void) photoEditor:(AFPhotoEditorController *)editor finishedWithImage:(UIImage *)image
 {
+    if (!editor.session.isModified) {
+        [self returnSuccess:originalImageURI];
+        [self closeAviary];
+        return;
+    }
+    
     BOOL ok = false;
     NSString * res = @"error";
     BOOL saveToPhotoAlbum = YES;
