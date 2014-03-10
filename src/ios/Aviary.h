@@ -18,6 +18,7 @@
 @property (nonatomic, retain) NSNumber* quality;
 @property (nonatomic, retain) NSString* originalImageURI;
 
+- (void) prepareForShow:(CDVInvokedUrlCommand*)command;
 - (void) show:(CDVInvokedUrlCommand*)command;
 
 @end
